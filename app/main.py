@@ -113,52 +113,33 @@ def health():
 @app.post("/ask/stream")
 async def ask_stream(payload: AskPayload):
     """
-    Handle a single user question and stream back the answer token-by-token.
-
-    Steps:
-        1. Validate session_id or generate a new one.
-        2. Pass the question to the RAG pipeline.
-        3. Sanitize the LLM-generated answer.
-        4. Update session history.
-        5. Stream tokens gradually to simulate typing.
-
-    Args:
-        payload (AskPayload): Incoming request containing the question and optional parameters.
-
-    Returns:
-        StreamingResponse: Stream of JSON tokens representing the generated answer.
+    Streams a *cleaned* answer to the UI token-by-token.
     """
     try:
         session_id = payload.session_id or str(uuid.uuid4())
         if session_id not in SESSION_HISTORY:
             SESSION_HISTORY[session_id] = []
 
-        # Generate complete answer (retrieval + LLM)
-        result = generate_answer(
+        # Generate final answer (string only)
+        raw_answer = generate_answer(
             question=payload.question,
-            retrieval_mode=payload.retrieval_mode,
-            top_k=payload.top_k,
+            retrieval_mode=payload.retrieval_mode
         )
-        raw_answer = result.get("answer", "")
+
         clean = sanitize_answer(raw_answer)
 
-        # Update session history
+        # Update session memory
         SESSION_HISTORY[session_id].append(
             {"user": payload.question, "assistant": clean}
         )
 
-        # Stream tokens asynchronously
+        # Stream tokens from the cleaned text
         async def token_generator():
-            """
-            Generator that yields tokens of the final answer one by one.
-            Creates a type-on effect in the frontend.
-            """
             buffer = ""
             for token in clean.split():
                 buffer += token + " "
                 yield json.dumps({"token": token}) + "\n"
-                await asyncio.sleep(0.03)  # Small delay for typing simulation
-            # Yield final message
+                await asyncio.sleep(0.03)  # simulate typing
             yield json.dumps({
                 "final": buffer.strip(),
                 "session_id": session_id,

@@ -182,10 +182,10 @@ with st.container():
 
     # Predefined FAQs as clickable buttons
     suggestions = [
-        "What documents are needed for reimbursement?",
-        "How do I download my payslip?",
+        "How do I download my payslip from the HR portal?",
+
         "What is the notice period for resignation?",
-        "Are there any educational allowances?"
+        "How many paid leaves am I eligible for in a year?"
     ]
 
     # Display suggestion buttons with equal spacing

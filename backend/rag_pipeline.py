@@ -168,7 +168,8 @@ def rerank_results(query: str, results: List[Dict], top_k: int) -> List[Dict]:
 #                   FINAL GENERATION
 # =====================================================
 
-def generate_answer(question: str, retrieval_mode: str = None) -> str:
+def generate_answer(question: str, retrieval_mode: str = None, top_k: int = None) -> str:
+    top_k = top_k or retriever_cfg.get("top_k", 3)
     """
     Generate a final natural language answer for the user question.
 
