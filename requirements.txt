@@ -1,0 +1,12 @@
+pandas
+sentence_transformers
+chromadb
+rank_bm25
+pyyaml
+fastapi
+streamlit
+requests
+streamlit-float
+transformers
+python-dotenv
+uvicorn
