@@ -35,7 +35,6 @@ CHROMA_DB_PATH = "data/vectordb/chroma"  # Persistent ChromaDB storage path
 CHROMA_COLLECTION = "hr_policy_qa"  # Chroma collection name
 BM25_INDEX_PATH = "data/indexes/bm25_index.pkl"  # BM25 index pickle file path
 
-
 # ---- Helper Functions ----
 def _file_exists(path: str) -> bool:
     """

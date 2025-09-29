@@ -10,3 +10,6 @@ streamlit-float
 transformers
 python-dotenv
 uvicorn
+contractions
+spacy
+nltk

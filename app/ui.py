@@ -182,10 +182,9 @@ with st.container():
 
     # Predefined FAQs as clickable buttons
     suggestions = [
-        "How do I download my payslip from the HR portal?",
-
+        "Do we have a wfh policy?",
         "What is the notice period for resignation?",
-        "How many paid leaves am I eligible for in a year?"
+        "How do I update my bank account?"
     ]
 
     # Display suggestion buttons with equal spacing
